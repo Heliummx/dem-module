@@ -8,6 +8,9 @@ Este modulo es el encargado de las siguientes funciones:
 - Endpoint que recibe un post para generar orden
 
 Se debe definir un parner "dummy" en company para que el modulo lo asigne a una orden en caso de que no cuente con id.
-Hay que realizar una autenticacion con cookies antes de crear una orden por cuestiones de seguridad.
-El endpoint a donde se mandarán los posts se define en la compañia
-El endpoint que recibe la orden está en algun lugar del código
+
+You have to call the endpoint /web/session/authenticate with specific data (the data base and the user login and password ), this endpoint return s a json with a key "session_id", this session_id key must be used to call the /create_sale_order_connector with the data to create the sale order.
+
+El endpoint a donde se mandarán los posts se define en la compañia.
+
+El endpoint que recibe la orden está en algun lugar del código.
