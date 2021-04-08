@@ -106,7 +106,7 @@ class ProductStockPriceConnector(http.Controller):
                     'partner_invoice_id': partner.id,
                     'partner_shipping_id': customer.id,
                     'order_line': order_line,
-                    'portal': 'Shopify Dem' + data.get('name'),
+                    'portal': 'DEM ' + data.get('name'),
                     'x_studio_metodo_de_pago': data.get('gateway'),
                     'x_studio_metodo_de_envio_shopify': shipping_title,
                     'x_studio_comentarios': shopify_note,
