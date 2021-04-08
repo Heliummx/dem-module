@@ -25,7 +25,7 @@ class ProductInheritProductStockPriceConnector(models.Model):
             data = {
                 "name": line.name,
                 "image": product_images,
-                "description": line.description,
+                "description": line.website_description,
                 "vendor": line.marca_ids.mapped('display_name'),
                 "variants": variant_data
             }
