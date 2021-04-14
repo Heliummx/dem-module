@@ -19,7 +19,14 @@ class ProductInheritProductStockPriceConnector(models.Model):
             if line.image_medium:
                 product_images.append(line.image_medium.decode('utf-8'))
             for variant in variants:
-                variant_data.append({'sku': variant.default_code, 'sales_price': variant.list_price, 'stock':variant.qty_available_not_res})
+                variant_data.append({
+                    'sku': variant.default_code, 
+                    'sales_price': variant.list_price, 
+                    'stock':variant.qty_available_not_res, 
+                    'variant_tags':[{variant_attribute.attribute_id.display_name: variant_attribute.name} for
+                                     variant_attribute in
+                                     variant.attribute_value_ids]
+                })
                 if variant.image_medium:
                     product_images.append(variant.image_medium.decode('utf-8'))
             data = {
