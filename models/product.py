@@ -16,7 +16,6 @@ class ProductInheritProductStockPriceConnector(models.Model):
         if res_categ:
             if len(res_categ) <= 1:
                 res_categ = res_categ[0]
-
         return res_categ
     
     def send_product_template_info(self):
