@@ -11,7 +11,6 @@ class ProductInheritProductStockPriceConnector(models.Model):
 
     def send_product_template_info(self):
         headers = {'Content-Type': 'application/json'}
-
         for line in self:
             variants = line.product_variant_ids
             product_images = []
