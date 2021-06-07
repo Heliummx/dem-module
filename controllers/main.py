@@ -41,7 +41,7 @@ class ProductStockPriceConnector(http.Controller):
             shopify_note = "Nota de Envio: " + shopify_note;
             phone_customer = customer_shopify_id.get('default_address').get('phone')
             customer_odoo = request.env['res.partner'].sudo().search(
-                [('email', '=', customer_shopify_id.get('id'))])
+                [('email', '=', customer_shopify_id.get('email'))])
             
             #Creating or updating customer
             if customer_odoo.exists():
