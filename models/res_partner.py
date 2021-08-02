@@ -10,6 +10,8 @@ _logger = logging.getLogger(__name__)
 class ResPartnerInheritProductStockConnector(models.Model):
     _inherit = "res.partner"
 
+    dem_discount = fields.Integer(string="Descuento DEM")
+    
     def send_partner_info(self):
         for line in self:
             partner_id = line.id
