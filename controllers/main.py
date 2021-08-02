@@ -86,8 +86,7 @@ class ProductStockPriceConnector(http.Controller):
             subtotal_without_taxes_shopify = float(data.get('subtotal_price')) - float(data.get('total_tax'));
             discount = self.get_discount_order_line_data(order_lines, subtotal_without_taxes_shopify);
 
-            if discount < 15:
-                discount = 15
+            discount += partner.dem_discount
 
             # get the sale lines
             if order_lines:
@@ -95,9 +94,6 @@ class ProductStockPriceConnector(http.Controller):
                 order_line = self.get_sale_order_line_data(order_lines, discount)
             else:
                 order_line = []
-
-        #    request.env['sale.order'].create(
-        #        {'partner_id': partner.id, 'order_line': order_line}, )
 
             shipping_title = "Recoger en Tienda"
             shopify_shipping_lines = data.get('shipping_lines')
@@ -115,7 +111,7 @@ class ProductStockPriceConnector(http.Controller):
                     'partner_invoice_id': partner.id,
                     'partner_shipping_id': customer.id,
                     'order_line': order_line,
-                    'portal': data.get('storeName') + data.get('name'),
+                    'portal': data.get('storeName') + " " + data.get('name'),
                     'x_studio_metodo_de_pago': data.get('gateway'),
                     'x_studio_metodo_de_envio_shopify': shipping_title,
                     'x_studio_comentarios': shopify_note,
