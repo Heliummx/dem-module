@@ -82,16 +82,12 @@ class ProductStockPriceConnector(http.Controller):
 
             # creating disscount
             order_lines = data.get('line_items')
-
-            subtotal_without_taxes_shopify = float(data.get('subtotal_price')) - float(data.get('total_tax'));
-            discount = self.get_discount_order_line_data(order_lines, subtotal_without_taxes_shopify);
-
-            discount += float(data.get('demDiscount'))
-
+            demDiscount = float(data.get('demDiscount'))
+            
             # get the sale lines
             if order_lines:
                 _logger.info("DEM: Hay order_lines")
-                order_line = self.get_sale_order_line_data(order_lines, discount)
+                order_line = self.get_sale_order_line_data(order_lines, demDiscount)
             else:
                 order_line = []
 
@@ -137,7 +133,8 @@ class ProductStockPriceConnector(http.Controller):
             product_id = request.env['product.product'].sudo().search([('default_code', '=', line['sku'])], limit=1)
             
             if product_id:
-                product_dis = ( 1 - ( float(line.get('price')) / float(product_id.list_price) ) )  * 100            
+                product_dis = ( 1 - ( float(line.get('price')) / float(product_id.list_price) ) )  * 100 
+                product_dis += float(discount)           
                 _logger.info("DEM: Appending product to order")
                 res.append((0, 0, {'product_id': product_id.id, 'product_uom_qty': line.get('quantity'), 'discount': product_dis}))
         return res
