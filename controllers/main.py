@@ -86,7 +86,7 @@ class ProductStockPriceConnector(http.Controller):
             subtotal_without_taxes_shopify = float(data.get('subtotal_price')) - float(data.get('total_tax'));
             discount = self.get_discount_order_line_data(order_lines, subtotal_without_taxes_shopify);
 
-            discount += data.get('demDiscount')
+            discount += float(data.get('demDiscount'))
 
             # get the sale lines
             if order_lines:
