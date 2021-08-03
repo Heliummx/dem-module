@@ -86,7 +86,7 @@ class ProductStockPriceConnector(http.Controller):
             subtotal_without_taxes_shopify = float(data.get('subtotal_price')) - float(data.get('total_tax'));
             discount = self.get_discount_order_line_data(order_lines, subtotal_without_taxes_shopify);
 
-            discount += partner.dem_discount
+            discount += data.get('demDiscount')
 
             # get the sale lines
             if order_lines:
@@ -138,8 +138,6 @@ class ProductStockPriceConnector(http.Controller):
             
             if product_id:
                 product_dis = ( 1 - ( float(line.get('price')) / float(product_id.list_price) ) )  * 100            
-                if product_dis < 15:
-                    product_dis = 15
                 _logger.info("DEM: Appending product to order")
                 res.append((0, 0, {'product_id': product_id.id, 'product_uom_qty': line.get('quantity'), 'discount': product_dis}))
         return res
