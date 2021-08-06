@@ -24,7 +24,8 @@ class ProductInheritProductStockPriceConnector(models.Model):
                 variant_info_array=[]
                 for variant_attribute in variant.attribute_value_ids:
                     variant_info_array.append({variant_attribute.attribute_id.display_name: variant_attribute.name})
-                variant_data.append({'sku': variant.default_code, 'sales_price': variant.list_price, 'stock':variant.qty_available_not_res, 'variant_info':variant_info_array, 'barcode':variant.barcode})
+                qty_custom = variant.qty_available - variant.outgoing_qty
+                variant_data.append({'sku': variant.default_code, 'sales_price': variant.list_price, 'stock':qty_custom, 'variant_info':variant_info_array, 'barcode':variant.barcode})
             res_categ = []
             for categs in line.public_categ_ids:
                 res_categ.append(categs.display_name.split('/'))
@@ -59,8 +60,9 @@ class ProductInheritProductStockPriceConnector(models.Model):
         for line in self:
             variants = line.product_variant_ids
             for variant in variants:
+                qty_custom = variant.qty_available - variant.outgoing_qty
                 data = {'sku': variant.default_code,
-                        'new_stock': variant.qty_available_not_res,
+                        'new_stock': qty_custom,
                         'new_price': variant.list_price}
                 print(data)
                 headers = {'Content-Type': 'application/json'}
