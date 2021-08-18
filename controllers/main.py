@@ -80,6 +80,13 @@ class ProductStockPriceConnector(http.Controller):
                     _logger.info("No dummy dist found, aborting the request ...")
                     return
 
+            #clasificaciones y subclases
+            ultimo_consumidor_tag = request.env['marvelfields.clasificaciones'].sudo().search([('name','=', 'Ultimo Consumidor')])
+            shopify_tag = request.env['marvelfields.subclases'].sudo().search([('name','=','Shopify')]) 
+                
+            partner.clasificaciones_ids = [(4, ultimo_consumidor_tag.id)]
+            partner.subclases_ids = [(4, shopify_tag.id)]
+
             # creating disscount
             order_lines = data.get('line_items')
             demDiscount = float(data.get('demDiscount'))
