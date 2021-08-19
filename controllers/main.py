@@ -84,8 +84,8 @@ class ProductStockPriceConnector(http.Controller):
             ultimo_consumidor_tag = request.env['marvelfields.clasificaciones'].sudo().search([('name','=', 'Ultimo Consumidor')])
             shopify_tag = request.env['marvelfields.subclases'].sudo().search([('name','=','Shopify')]) 
                 
-            partner.clasificaciones_ids = [(4, ultimo_consumidor_tag.id)]
-            partner.subclases_ids = [(4, shopify_tag.id)]
+            # partner.clasificaciones_ids = [(4, ultimo_consumidor_tag.id)]
+            # partner.subclases_ids = [(4, shopify_tag.id)]
 
             # creating disscount
             order_lines = data.get('line_items')
@@ -119,7 +119,9 @@ class ProductStockPriceConnector(http.Controller):
                     'x_studio_metodo_de_envio_shopify': shipping_title,
                     'x_studio_comentarios': shopify_note,
                     'x_studio_pago_con_gift_cards': it_was_gift_card,
-                    'shopify_sale_order_id': sale_order_id
+                    'shopify_sale_order_id': sale_order_id,
+                    'qou_clas':[(4, ultimo_consumidor_tag.id)],
+                    'qou_subclase': [(4, shopify_tag.id)]
                 }, )
             _logger.info("Confirming the created sale")
 
