@@ -10,6 +10,5 @@
             <field name="code">records.send_partner_info()</field>
         </record>
 
-
     </data>
 </odoo>
